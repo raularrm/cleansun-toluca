@@ -170,20 +170,9 @@ export function Resenas() {
 
         {/* Trabajos realizados — real photos sourced from Google Maps */}
         <div className="mt-16">
-          <div className="flex items-end justify-between gap-4 flex-wrap mb-6">
-            <div>
-              <h2 className="font-heading text-2xl text-ink">Trabajos realizados</h2>
-              <p className="text-muted text-sm mt-1">Fotos reales, tomadas de la ficha pública de Google de CleanSun.</p>
-            </div>
-            <a
-              href={MAPS_LINK}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-maps shrink-0 inline-flex items-center gap-1.5 text-xs font-medium text-ink bg-[rgba(var(--text-primary-rgb),0.08)] border border-[rgba(var(--text-primary-rgb),0.2)] rounded-full px-3.5 py-2 min-h-[36px]"
-            >
-              <ExternalLink size={12} />
-              Ver más fotos en Google Maps
-            </a>
+          <div className="mb-6">
+            <h2 className="font-heading text-2xl text-ink">Trabajos realizados</h2>
+            <p className="text-muted text-sm mt-1">Fotos reales, tomadas de la ficha pública de Google de CleanSun.</p>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
@@ -221,8 +210,7 @@ export function Resenas() {
             Son las {GALLERY.length} fotografías de trabajos reales que pudimos extraer de la ficha de
             Google al construir este sitio (de un total de 15 en su perfil) — sin repetir tomas
             duplicadas o casi idénticas. No las completamos con imágenes generadas por IA porque esta
-            sección debe mostrar trabajo real — el resto puedes verlo directamente en Google Maps con el
-            botón de arriba.
+            sección debe mostrar trabajo real.
           </p>
         </div>
       </div>
