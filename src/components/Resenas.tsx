@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { ExternalLink, Star } from 'lucide-react';
 import { useReveal } from '../lib/useReveal';
 import { useSectionReveal } from '../lib/useSectionReveal';
 import { MAPS_LINK, SECTION_IDS } from '../lib/constants';
 import { SectionIntro } from './SectionIntro';
+import { Lightbox } from './Lightbox';
 import fotovoltaicoSrc from '../assets/img/cleansun-fotovoltaico-real.jpg';
 import cargadorSrc from '../assets/img/cleansun-cargador-mercedes-real.jpg';
+import fotovoltaico2ThumbSrc from '../assets/img/cleansun-fotovoltaico-real-2-thumb.jpg';
+import fotovoltaico2FullSrc from '../assets/img/cleansun-fotovoltaico-real-2.jpg';
 
 /**
  * Verbatim text, copied exactly as published on CleanSun's Google Business
@@ -46,13 +50,22 @@ const REVIEWS = [
 
 const GALLERY = [
   {
-    src: fotovoltaicoSrc,
+    thumb: fotovoltaicoSrc,
+    full: fotovoltaicoSrc,
     alt: 'Sistema fotovoltaico instalado en un techo, foto real de la ficha de Google Negocios de CleanSun',
     caption: 'Instalación fotovoltaica sobre techo industrial',
     source: 'Foto de la ficha de Google de CleanSun',
   },
   {
-    src: cargadorSrc,
+    thumb: fotovoltaico2ThumbSrc,
+    full: fotovoltaico2FullSrc,
+    alt: 'Otro ángulo del mismo sistema fotovoltaico sobre techo industrial, mostrando la fachada del edificio, foto real de la ficha de Google Negocios de CleanSun',
+    caption: 'Mismo techo, vista desde otro ángulo',
+    source: 'Foto de la ficha de Google de CleanSun',
+  },
+  {
+    thumb: cargadorSrc,
+    full: cargadorSrc,
     alt: 'Cargador para auto eléctrico Mercedes-Benz instalado en pared exterior residencial, foto real tomada de una reseña de cliente',
     caption: 'Cargador eléctrico instalado en casa (Mercedes-Benz)',
     source: 'Foto de una reseña de cliente en Google',
@@ -72,6 +85,7 @@ function Stars({ size = 14 }: { size?: number }) {
 export function Resenas() {
   const ref = useReveal<HTMLDivElement>();
   const sectionRef = useSectionReveal<HTMLElement>();
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
 
   return (
     <section id={SECTION_IDS['Reseñas']} ref={sectionRef} className="section-anchor relative bg-surface2">
@@ -172,28 +186,29 @@ export function Resenas() {
             </a>
           </div>
 
-          <div className="grid sm:grid-cols-5 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-5">
             {GALLERY.map((g, i) => (
               <figure
-                key={g.src}
+                key={g.thumb}
                 data-reveal
-                className={`overflow-hidden bg-surface border border-line ${
-                  i === 0 ? 'sm:col-span-3 rounded-[32px]' : 'sm:col-span-2 rounded-3xl'
-                }`}
+                className="overflow-hidden rounded-3xl bg-surface border border-line"
               >
-                <div className={`relative ${i === 0 ? 'aspect-[16/10]' : 'aspect-square'}`}>
+                <button
+                  type="button"
+                  onClick={() => setLightboxIndex(i)}
+                  className="relative block w-full aspect-[4/3] group"
+                  aria-label={`Ampliar foto: ${g.caption}`}
+                >
                   <img
-                    src={g.src}
+                    src={g.thumb}
                     alt={g.alt}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                     loading="lazy"
-                    width={420}
-                    height={315}
                   />
                   <span className="absolute top-3 left-3 text-[11px] font-medium bg-black/60 backdrop-blur-sm text-white rounded-full px-3 py-1 border border-white/15">
                     Foto real
                   </span>
-                </div>
+                </button>
                 <figcaption className="p-4">
                   <p className="text-sm text-ink font-medium">{g.caption}</p>
                   <p className="text-xs mt-0.5 text-[rgba(var(--text-primary-rgb),0.4)]">{g.source}</p>
@@ -203,13 +218,23 @@ export function Resenas() {
           </div>
 
           <p className="text-xs mt-4 text-[rgba(var(--text-primary-rgb),0.4)]">
-            Son las 2 fotografías de trabajos reales que pudimos extraer de la ficha de Google al construir
-            este sitio (de un total de 15 en su perfil). No las completamos con imágenes generadas por IA
-            porque esta sección debe mostrar trabajo real — el resto puedes verlo directamente en Google
-            Maps con el botón de arriba.
+            Son las {GALLERY.length} fotografías de trabajos reales que pudimos extraer de la ficha de
+            Google al construir este sitio (de un total de 15 en su perfil) — sin repetir tomas
+            duplicadas o casi idénticas. No las completamos con imágenes generadas por IA porque esta
+            sección debe mostrar trabajo real — el resto puedes verlo directamente en Google Maps con el
+            botón de arriba.
           </p>
         </div>
       </div>
+
+      {lightboxIndex !== null && (
+        <Lightbox
+          src={GALLERY[lightboxIndex].full}
+          alt={GALLERY[lightboxIndex].alt}
+          caption={`${GALLERY[lightboxIndex].caption} — ${GALLERY[lightboxIndex].source}`}
+          onClose={() => setLightboxIndex(null)}
+        />
+      )}
     </section>
   );
 }

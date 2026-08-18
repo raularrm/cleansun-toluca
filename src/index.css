@@ -312,3 +312,23 @@ body {
 .privacy-fab:active {
   transform: scale(0.95);
 }
+
+/* =========================================================
+   WhatsApp floating button — persistent on the right edge
+   through the whole scroll, brand green regardless of theme
+   (same intentional exception as .btn-whatsapp).
+   ========================================================= */
+.whatsapp-fab {
+  background: #25d366;
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
+  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+}
+.whatsapp-fab:hover,
+.whatsapp-fab:focus-visible {
+  background: #20bd5a;
+  box-shadow: 0 10px 32px rgba(37, 211, 102, 0.55);
+  transform: scale(1.08);
+}
+.whatsapp-fab:active {
+  transform: scale(0.95);
+}
