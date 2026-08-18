@@ -3,7 +3,11 @@ import { Star, MapPin } from 'lucide-react';
 import { ParticleCanvas } from './ParticleCanvas';
 import { MAPS_LINK, SECTION_IDS } from '../lib/constants';
 import { scrollToId } from '../lib/lenis';
-import heroPhoto from '../assets/img/hero-solar-panels.jpg';
+
+// Served from Pexels' CDN rather than bundled locally — real rooftop solar
+// panel photo at 2400px wide, well above the 1920px minimum for a crisp
+// full-bleed hero background.
+const heroPhoto = 'https://images.pexels.com/photos/22032343/pexels-photo-22032343.jpeg?auto=compress&cs=tinysrgb&w=2400';
 
 export function Hero() {
   const [mounted, setMounted] = useState(false);
