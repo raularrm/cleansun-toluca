@@ -1,0 +1,314 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=Barlow:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   Theme tokens — every color in the app reads from these.
+   Nothing outside this block should hardcode white/black or a
+   fixed hex value (WhatsApp green and Google's brand gradient
+   are the only intentional exceptions: external brand colors
+   that must not shift with the site's theme).
+   ========================================================= */
+:root[data-theme='dark'] {
+  --bg: #0a0f14;
+  --surface: #12181f;
+  --surface-2: #1a222b;
+  --text-primary: #f5f3ee;
+  --text-primary-rgb: 245, 243, 238;
+  --text-secondary: rgba(245, 243, 238, 0.68);
+  --border: rgba(255, 255, 255, 0.1);
+  --accent: #ff7a1a;
+  --accent-rgb: 255, 122, 26;
+  --accent-strong: #ffa54d;
+  --accent-text-on: #1a0d02;
+  --particle-color: rgba(255, 122, 26, 0.6);
+  --glass-rgb: 255, 255, 255;
+
+  /* streaming-text component tokens */
+  --ink-3: rgba(245, 243, 238, 0.42);
+  --inset: #0e141a;
+  --hover: rgba(255, 255, 255, 0.05);
+  --hover-2: rgba(255, 255, 255, 0.09);
+  --line-strong: rgba(255, 255, 255, 0.16);
+}
+
+:root[data-theme='light'] {
+  --bg: #faf6ef;
+  --surface: #ffffff;
+  --surface-2: #f1ebdf;
+  --text-primary: #16130e;
+  --text-primary-rgb: 22, 19, 14;
+  --text-secondary: rgba(22, 19, 14, 0.65);
+  --border: rgba(22, 19, 14, 0.12);
+  --accent: #e8500a;
+  --accent-rgb: 232, 80, 10;
+  --accent-strong: #c94409;
+  --accent-text-on: #ffffff;
+  --particle-color: rgba(232, 80, 10, 0.4);
+  --glass-rgb: 22, 19, 14;
+
+  /* streaming-text component tokens */
+  --ink-3: rgba(22, 19, 14, 0.4);
+  --inset: #f6f1e7;
+  --hover: rgba(22, 19, 14, 0.04);
+  --hover-2: rgba(22, 19, 14, 0.08);
+  --line-strong: rgba(22, 19, 14, 0.2);
+}
+
+:root {
+  /* canvas = whatever surface the widget sits on, for avatar cutout rings */
+  --canvas: var(--surface);
+  --radius-control: 8px;
+}
+
+/* Anchor-scroll offset so section headings clear the fixed nav pill when
+   jumped to directly (single-page nav, scrollspy). */
+.section-anchor {
+  scroll-margin-top: 110px;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg);
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+body {
+  font-family: 'Barlow', sans-serif;
+  background: var(--bg);
+  color: var(--text-primary);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+::selection {
+  background: rgba(var(--accent-rgb), 0.35);
+  color: var(--text-primary);
+}
+
+/* =========================================================
+   Liquid glass — used for the floating nav pill and glass
+   buttons. Tints toward the theme's ink color, so it reads as
+   frosted-white glass in dark mode and frosted-dark glass in
+   light mode, rather than disappearing against a light bg.
+   ========================================================= */
+.liquid-glass {
+  background: rgba(var(--glass-rgb), 0.06);
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  border: 1px solid rgba(var(--glass-rgb), 0.12);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.16), inset 0 1px 0 rgba(var(--glass-rgb), 0.08);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+}
+.liquid-glass:hover {
+  background: rgba(var(--glass-rgb), 0.1);
+  border-color: rgba(var(--glass-rgb), 0.22);
+}
+.liquid-glass:active {
+  transform: scale(0.97);
+}
+
+.liquid-glass-strong {
+  background: rgba(var(--glass-rgb), 0.12);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(var(--glass-rgb), 0.22);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(var(--glass-rgb), 0.14);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+}
+.liquid-glass-strong:hover {
+  background: rgba(var(--glass-rgb), 0.18);
+  border-color: rgba(var(--glass-rgb), 0.34);
+}
+.liquid-glass-strong:active {
+  transform: scale(0.97);
+}
+
+/* =========================================================
+   Hero title — bold sans, never serif/italic
+   ========================================================= */
+.hero-title {
+  font-family: 'Archivo', sans-serif;
+  font-weight: 900;
+  font-size: clamp(52px, 10vw, 128px);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  text-align: center;
+}
+
+/* =========================================================
+   Glow — real box-shadow/text-shadow bloom in the accent
+   color, used on solid CTAs and accent-colored numerals.
+   ========================================================= */
+.btn-glow {
+  box-shadow: 0 0 0 rgba(var(--accent-rgb), 0), 0 8px 30px rgba(var(--accent-rgb), 0.35);
+  transition: box-shadow 0.25s ease, transform 0.15s ease;
+}
+.btn-glow:hover,
+.btn-glow:focus-visible {
+  box-shadow: 0 0 0 rgba(var(--accent-rgb), 0), 0 10px 42px rgba(var(--accent-rgb), 0.55);
+}
+.btn-glow:active {
+  transform: scale(0.97);
+}
+
+.text-glow {
+  text-shadow: 0 0 24px rgba(var(--accent-rgb), 0.5), 0 0 4px rgba(var(--accent-rgb), 0.3);
+}
+
+/* =========================================================
+   Glass content cards — for social-proof / featured cards
+   that should read as frosted glass rather than a flat
+   border, distinguishing them from the plain bordered cards.
+   ========================================================= */
+.card-glass {
+  background: rgba(var(--glass-rgb), 0.07);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(var(--accent-rgb), 0.25);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18), 0 0 60px rgba(var(--accent-rgb), 0.08), inset 0 1px 0 rgba(var(--glass-rgb), 0.1);
+}
+
+/* Subtle solar-panel grid texture behind the hero particles —
+   5-8% opacity, tinted with the theme's ink color so it never
+   fights the accent or the text. */
+.solar-grid {
+  background-image:
+    linear-gradient(rgba(var(--text-primary-rgb), 0.07) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--text-primary-rgb), 0.07) 1px, transparent 1px);
+  background-size: 42px 42px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, black 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, black 40%, transparent 85%);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Scroll reveal (see src/lib/useReveal.ts) */
+.reveal-pending {
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 480ms cubic-bezier(0.16, 1, 0.3, 1), transform 480ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal-pending.reveal-visible {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-pending { opacity: 1; transform: none; transition: none; }
+}
+
+/* =========================================================
+   WhatsApp buttons — brand green, intentionally the same in
+   both themes (external brand color, not a site accent).
+   ========================================================= */
+.btn-whatsapp {
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.15s ease;
+}
+.btn-whatsapp:hover,
+.btn-whatsapp:focus-visible {
+  background-color: rgba(37, 211, 102, 0.18);
+  border-color: rgba(37, 211, 102, 0.55);
+  color: #fff;
+}
+.btn-whatsapp:active {
+  transform: scale(0.97);
+}
+
+/* =========================================================
+   Google Maps buttons — Google's own multicolor palette,
+   also intentionally constant across themes.
+   ========================================================= */
+.btn-maps {
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s ease, color 0.3s ease, transform 0.15s ease;
+}
+.btn-maps::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    100deg,
+    rgba(66, 133, 244, 0.22) 0%,
+    rgba(52, 168, 83, 0.22) 33%,
+    rgba(251, 188, 5, 0.22) 66%,
+    rgba(234, 67, 53, 0.22) 100%
+  );
+  transition: opacity 0.3s ease;
+}
+.btn-maps:hover,
+.btn-maps:focus-visible {
+  border-color: rgba(var(--glass-rgb), 0.4);
+}
+.btn-maps:hover::before,
+.btn-maps:focus-visible::before {
+  opacity: 1;
+}
+.btn-maps:active {
+  transform: scale(0.97);
+}
+.btn-maps > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* =========================================================
+   Privacy / cookies — floating circular button, present on
+   every page (WhatsApp-float style), bottom-left so it never
+   collides with a WhatsApp float button on the right.
+   ========================================================= */
+.privacy-fab {
+  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+.privacy-fab:hover,
+.privacy-fab:focus-visible {
+  transform: scale(1.08);
+}
+.privacy-fab:active {
+  transform: scale(0.95);
+}
