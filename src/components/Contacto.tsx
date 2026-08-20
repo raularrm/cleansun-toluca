@@ -94,7 +94,7 @@ export function Contacto() {
             </div>
           </div>
 
-          <div data-reveal className="rounded-3xl overflow-hidden border border-line min-h-[320px] relative">
+          <div data-reveal className="rounded-3xl overflow-hidden border border-line min-h-[320px] relative bg-surface">
             <a
               href={MAPS_LINK}
               target="_blank"
@@ -104,12 +104,15 @@ export function Contacto() {
               <ExternalLink size={12} />
               Verificar en Google Maps
             </a>
+            {/* Google Maps embed only ships light tiles — invert + hue-rotate
+                turns it into a dark map so it doesn't sit as a bright white
+                box in an otherwise all-dark page. */}
             <iframe
               title="Mapa de ubicación de CleanSun en Toluca"
               src="https://www.google.com/maps?q=CleanSun+Paneles+Solares+Toluca,+Blvd+Jose+Maria+Pino+Suarez+Sur+2114-B,+Toluca+de+Lerdo&output=embed"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="w-full h-full min-h-[320px] border-0 grayscale-[15%] contrast-[1.05]"
+              className="w-full h-full min-h-[320px] border-0 invert-[0.9] hue-rotate-180 contrast-[0.9] brightness-[0.95]"
             />
           </div>
         </div>

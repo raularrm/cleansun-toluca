@@ -6,38 +6,39 @@
 
 /* =========================================================
    Design tokens — every color in the app reads from these.
-   This redesign (from the CleanSun Claude Design project) is a
-   single fixed look, not a light/dark toggle: the alternating
-   cream/near-black section rhythm IS the design, so there is no
-   per-user theme switch here anymore (removed along with
-   ThemeProvider/ThemeToggle — Hero, Calculadora and Footer stay
-   forced-dark via their own hardcoded classes regardless of
-   these tokens, exactly like the reference).
+   Single fixed look, not a light/dark toggle: the whole site is
+   dark by default now (client asked to drop the cream sections
+   entirely for a more elegant feel). Hero, Calculadora and
+   Footer already hardcoded this same near-black + lime — these
+   tokens were updated to match exactly, so every other section
+   (Servicios, Reseñas, Contacto, Nav...) now sits on the same
+   canvas instead of needing their own forced-dark override.
    ========================================================= */
 :root {
-  --bg: #faf7f3;
-  --bg-rgb: 250, 247, 243;
-  --surface: #ffffff;
-  --surface-2: #f2ede5;
-  --text-primary: #14110e;
-  --text-primary-rgb: 20, 17, 14;
-  --text-secondary: #6b635b;
-  --border: rgba(20, 17, 14, 0.1);
-  --accent: #4e8a12;
-  --accent-rgb: 78, 138, 18;
-  --accent-strong: #3d6f0e;
-  --accent-text-on: #ffffff;
-  --accent-2: #1793a3;
-  --accent-2-rgb: 23, 147, 163;
-  --particle-color: rgba(78, 138, 18, 0.35);
-  --glass-rgb: 20, 17, 14;
+  --bg: #14110e;
+  --bg-rgb: 20, 17, 14;
+  --surface: #1c1712;
+  --surface-2: #221c16;
+  --text-primary: #faf7f3;
+  --text-primary-rgb: 250, 247, 243;
+  --text-secondary: #a79d90;
+  --border: rgba(250, 247, 243, 0.12);
+  --accent: #b8f04a;
+  --accent-rgb: 184, 240, 74;
+  --accent-strong: #cdf87a;
+  --accent-text-on: #14110e;
+  --accent-2: #3ad4e0;
+  --accent-2-rgb: 58, 212, 224;
+  --particle-color: rgba(184, 240, 74, 0.35);
+  --glass-rgb: 250, 247, 243;
 
-  /* streaming-text component tokens */
-  --ink-3: #9a9188;
-  --inset: #f2ede5;
-  --hover: rgba(20, 17, 14, 0.04);
-  --hover-2: rgba(20, 17, 14, 0.08);
-  --line-strong: rgba(20, 17, 14, 0.2);
+  /* streaming-text component tokens (only used on the unlinked
+     /demo/streaming-text scaffold route, not the real site) */
+  --ink-3: #8a8177;
+  --inset: #221c16;
+  --hover: rgba(250, 247, 243, 0.06);
+  --hover-2: rgba(250, 247, 243, 0.1);
+  --line-strong: rgba(250, 247, 243, 0.22);
 }
 
 :root {
@@ -46,14 +47,11 @@
   --radius-control: 8px;
 }
 
-/* The site's real --accent (green) is tuned for the cream sections.
-   Hero, Calculadora, Footer and the WhatsApp fab are forced-dark
-   regardless of section, and on that near-black bg green reads muddy —
-   the reference uses the vibrant lime there instead. Rather than
-   duplicate every text-accent/bg-accent/.btn-glow/.card-glass/.text-glow
-   usage with a second color name, this scopes an override of the same
-   variables so everything already using them just inherits the right
-   value inside these subtrees. */
+/* Leftover from when only Hero/Calculadora/Footer were forced-dark and
+   the rest of the site was cream — --accent was green there and this
+   class bumped it to lime for those three sections. Now that :root
+   itself is lime-on-dark everywhere, this is a no-op (same values twice)
+   but harmless to leave on those sections in case that ever changes. */
 .accent-on-dark {
   --accent: #b8f04a;
   --accent-rgb: 184, 240, 74;
