@@ -9,7 +9,6 @@ import {
   PHONE_DISPLAY,
   PHONE_TEL,
   SECTION_IDS,
-  WHATSAPP_LINK_QUOTE,
 } from '../lib/constants';
 
 const HOURS = [
@@ -23,11 +22,11 @@ export function Contacto() {
   const sectionRef = useSectionReveal<HTMLElement>();
 
   return (
-    <section id={SECTION_IDS.Contacto} ref={sectionRef} className="section-anchor relative bg-bg">
+    <section id={SECTION_IDS.Cobertura} ref={sectionRef} className="section-anchor relative bg-bg">
       <div ref={ref} className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-20">
         <SectionIntro
-          eyebrow="Contacto"
-          title="Habla directo con el equipo que instala tu sistema"
+          eyebrow="Cobertura"
+          title="Estamos en Toluca, con dirección verificable"
           description="Sin intermediarios ni call center: escribes por WhatsApp y contesta el mismo equipo que va a subir al techo."
         />
         <div className="grid gap-6 lg:grid-cols-2">
@@ -113,24 +112,6 @@ export function Contacto() {
               className="w-full h-full min-h-[320px] border-0 grayscale-[15%] contrast-[1.05]"
             />
           </div>
-        </div>
-
-        <div data-reveal className="mt-8 rounded-3xl bg-gradient-to-br from-[rgba(var(--accent-rgb),0.15)] to-transparent border border-[rgba(var(--accent-rgb),0.2)] p-6 sm:p-8 flex flex-col sm:flex-row items-center gap-6 justify-between">
-          <div className="text-center sm:text-left">
-            <h3 className="font-heading text-xl text-ink">¿Listo para bajar tu recibo de CFE?</h3>
-            <p className="text-muted text-sm mt-1.5 max-w-md">
-              Cuéntanos tu consumo por WhatsApp y agenda tu visita técnica sin costo de diagnóstico.
-            </p>
-          </div>
-          <a
-            href={WHATSAPP_LINK_QUOTE}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="btn-whatsapp shrink-0 inline-flex items-center gap-2 rounded-full bg-ink text-bg hover:text-white border border-transparent font-medium text-sm px-6 py-3.5 min-h-[48px] transition-shadow hover:shadow-[0_0_28px_rgba(37,211,102,0.25)] active:scale-95"
-          >
-            <MessageCircle size={17} />
-            {PHONE_DISPLAY} · Escribir por WhatsApp
-          </a>
         </div>
       </div>
     </section>

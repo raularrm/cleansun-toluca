@@ -1,7 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  darkMode: ['selector', '[data-theme="dark"]'],
   theme: {
     extend: {
       fontFamily: {
@@ -23,6 +22,7 @@ export default {
         accent: 'var(--accent)',
         accentStrong: 'var(--accent-strong)',
         accentOn: 'var(--accent-text-on)',
+        accent2: 'var(--accent-2)',
       },
     },
   },

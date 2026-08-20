@@ -1,11 +1,11 @@
-export const NAV_LINKS = ['Inicio', 'Servicios', 'Calculadora', 'Reseñas', 'Contacto'] as const;
+export const NAV_LINKS = ['Inicio', 'Servicios', 'Calculadora', 'Reseñas', 'Cobertura'] as const;
 
 export const SECTION_IDS: Record<(typeof NAV_LINKS)[number], string> = {
   Inicio: 'inicio',
   Servicios: 'servicios',
   Calculadora: 'calculadora',
   'Reseñas': 'resenas',
-  Contacto: 'contacto',
+  Cobertura: 'contacto',
 };
 
 // Single-page scroll site: "/" is the only content route, all sections
@@ -23,6 +23,9 @@ export const WHATSAPP_NUMBER = '527224758931';
 export const WHATSAPP_LINK = 'https://wa.me/527224758931';
 export const WHATSAPP_LINK_QUOTE = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   'Hola, quiero cotizar un sistema fotovoltaico con CleanSun.'
+)}`;
+export const WHATSAPP_LINK_VISIT = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
+  'Hola, quiero agendar una visita técnica con CleanSun.'
 )}`;
 export const PHONE_DISPLAY = '722 475 8931';
 export const PHONE_TEL = 'tel:+527224758931';

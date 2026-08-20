@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { LogoMark } from './LogoMark';
-import { ThemeToggle } from './ThemeToggle';
 import { NAV_LINKS, SECTION_IDS, PENDING_SECTION_KEY, WHATSAPP_LINK_QUOTE } from '../lib/constants';
 import { scrollToId } from '../lib/lenis';
 
@@ -50,22 +49,22 @@ export function Nav() {
 
   return (
     <header className="fixed top-0 inset-x-0 z-50">
-      <div className="mx-auto max-w-6xl px-4 sm:px-6 pt-4 sm:pt-6">
-        <nav
-          className="liquid-glass rounded-full flex items-center justify-between gap-2 px-3 sm:px-4 py-2.5"
-          aria-label="Navegación principal"
-        >
+      <nav
+        className="backdrop-blur-xl border-b border-line bg-[rgba(var(--bg-rgb),0.86)]"
+        aria-label="Navegación principal"
+      >
+        <div className="mx-auto max-w-6xl px-4 sm:px-6 h-[68px] sm:h-[74px] flex items-center justify-between gap-4">
           <button
             type="button"
             onClick={() => goToSection(SECTION_IDS.Inicio)}
-            className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full text-ink"
+            className="flex items-center gap-2.5 text-ink shrink-0"
             aria-label="CleanSun — ir al inicio"
           >
-            <LogoMark className="w-7 h-7 text-accent" />
-            <span className="font-heading font-black text-lg tracking-tight text-ink hidden xs:inline">CleanSun</span>
+            <LogoMark className="w-8 h-8 text-accent" />
+            <span className="font-heading font-black text-lg tracking-tight text-ink">CleanSun</span>
           </button>
 
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-7">
             {NAV_LINKS.map((label) => {
               const isActive = activeId === SECTION_IDS[label];
               return (
@@ -73,8 +72,8 @@ export function Nav() {
                   key={label}
                   type="button"
                   onClick={() => goToSection(SECTION_IDS[label])}
-                  className={`font-body text-sm transition-colors px-3 py-2 rounded-full hover:bg-[rgba(var(--text-primary-rgb),0.05)] ${
-                    isActive ? 'text-ink bg-[rgba(var(--text-primary-rgb),0.08)]' : 'text-muted hover:text-ink'
+                  className={`font-body text-[14.5px] font-medium transition-colors ${
+                    isActive ? 'text-ink' : 'text-muted hover:text-accent'
                   }`}
                 >
                   {label}
@@ -83,20 +82,20 @@ export function Nav() {
             })}
           </div>
 
-          <div className="flex items-center gap-2">
-            <ThemeToggle className="hidden sm:flex" />
+          <div className="flex items-center gap-2 shrink-0">
             <a
               href={WHATSAPP_LINK_QUOTE}
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-whatsapp liquid-glass-strong hidden sm:inline-flex items-center rounded-full px-4 py-2 text-sm font-medium text-ink"
+              className="btn-whatsapp hidden sm:inline-flex items-center gap-2 rounded-full bg-ink text-bg px-5 py-2.5 text-sm font-medium min-h-[44px]"
             >
+              <span className="w-1.5 h-1.5 rounded-full bg-accent" aria-hidden="true" />
               Cotizar por WhatsApp
             </a>
             <button
               type="button"
               onClick={() => setOpen((v) => !v)}
-              className="md:hidden liquid-glass rounded-full p-3 text-ink"
+              className="md:hidden rounded-full p-3 text-ink border border-line"
               aria-expanded={open}
               aria-controls="mobile-nav-panel"
               aria-label={open ? 'Cerrar menú' : 'Abrir menú'}
@@ -104,42 +103,39 @@ export function Nav() {
               {open ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
-        </nav>
+        </div>
+      </nav>
 
-        {open && (
-          <div
-            id="mobile-nav-panel"
-            className="bg-surface border border-line shadow-2xl rounded-3xl mt-2 md:hidden flex flex-col p-2"
-          >
-            {NAV_LINKS.map((label) => {
-              const isActive = activeId === SECTION_IDS[label];
-              return (
-                <button
-                  key={label}
-                  type="button"
-                  onClick={() => goToSection(SECTION_IDS[label])}
-                  className={`text-left font-body px-4 py-3 rounded-2xl hover:bg-[rgba(var(--text-primary-rgb),0.05)] min-h-[44px] flex items-center ${
-                    isActive ? 'text-ink bg-[rgba(var(--text-primary-rgb),0.08)]' : 'text-muted hover:text-ink'
-                  }`}
-                >
-                  {label}
-                </button>
-              );
-            })}
-            <div className="flex items-center gap-2 mt-1 px-1">
-              <a
-                href={WHATSAPP_LINK_QUOTE}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-whatsapp liquid-glass-strong flex-1 text-center rounded-2xl px-4 py-3 text-ink font-medium min-h-[44px] flex items-center justify-center"
+      {open && (
+        <div
+          id="mobile-nav-panel"
+          className="mx-4 mt-2 bg-surface border border-line shadow-2xl rounded-3xl md:hidden flex flex-col p-2"
+        >
+          {NAV_LINKS.map((label) => {
+            const isActive = activeId === SECTION_IDS[label];
+            return (
+              <button
+                key={label}
+                type="button"
+                onClick={() => goToSection(SECTION_IDS[label])}
+                className={`text-left font-body px-4 py-3 rounded-2xl hover:bg-[rgba(var(--text-primary-rgb),0.05)] min-h-[44px] flex items-center ${
+                  isActive ? 'text-ink bg-[rgba(var(--text-primary-rgb),0.08)]' : 'text-muted hover:text-ink'
+                }`}
               >
-                Cotizar por WhatsApp
-              </a>
-              <ThemeToggle />
-            </div>
-          </div>
-        )}
-      </div>
+                {label}
+              </button>
+            );
+          })}
+          <a
+            href={WHATSAPP_LINK_QUOTE}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn-whatsapp mt-1 text-center rounded-2xl bg-ink text-bg px-4 py-3 font-medium min-h-[44px] flex items-center justify-center"
+          >
+            Cotizar por WhatsApp
+          </a>
+        </div>
+      )}
     </header>
   );
 }

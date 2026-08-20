@@ -5,56 +5,39 @@
 @tailwind utilities;
 
 /* =========================================================
-   Theme tokens — every color in the app reads from these.
-   Nothing outside this block should hardcode white/black or a
-   fixed hex value (WhatsApp green and Google's brand gradient
-   are the only intentional exceptions: external brand colors
-   that must not shift with the site's theme).
+   Design tokens — every color in the app reads from these.
+   This redesign (from the CleanSun Claude Design project) is a
+   single fixed look, not a light/dark toggle: the alternating
+   cream/near-black section rhythm IS the design, so there is no
+   per-user theme switch here anymore (removed along with
+   ThemeProvider/ThemeToggle — Hero, Calculadora and Footer stay
+   forced-dark via their own hardcoded classes regardless of
+   these tokens, exactly like the reference).
    ========================================================= */
-:root[data-theme='dark'] {
-  --bg: #0a0f14;
-  --surface: #12181f;
-  --surface-2: #1a222b;
-  --text-primary: #f5f3ee;
-  --text-primary-rgb: 245, 243, 238;
-  --text-secondary: rgba(245, 243, 238, 0.68);
-  --border: rgba(255, 255, 255, 0.1);
-  --accent: #ff7a1a;
-  --accent-rgb: 255, 122, 26;
-  --accent-strong: #ffa54d;
-  --accent-text-on: #1a0d02;
-  --particle-color: rgba(255, 122, 26, 0.6);
-  --glass-rgb: 255, 255, 255;
-
-  /* streaming-text component tokens */
-  --ink-3: rgba(245, 243, 238, 0.42);
-  --inset: #0e141a;
-  --hover: rgba(255, 255, 255, 0.05);
-  --hover-2: rgba(255, 255, 255, 0.09);
-  --line-strong: rgba(255, 255, 255, 0.16);
-}
-
-:root[data-theme='light'] {
-  --bg: #faf6ef;
+:root {
+  --bg: #faf7f3;
+  --bg-rgb: 250, 247, 243;
   --surface: #ffffff;
-  --surface-2: #f1ebdf;
-  --text-primary: #16130e;
-  --text-primary-rgb: 22, 19, 14;
-  --text-secondary: rgba(22, 19, 14, 0.65);
-  --border: rgba(22, 19, 14, 0.12);
-  --accent: #e8500a;
-  --accent-rgb: 232, 80, 10;
-  --accent-strong: #c94409;
+  --surface-2: #f2ede5;
+  --text-primary: #14110e;
+  --text-primary-rgb: 20, 17, 14;
+  --text-secondary: #6b635b;
+  --border: rgba(20, 17, 14, 0.1);
+  --accent: #4e8a12;
+  --accent-rgb: 78, 138, 18;
+  --accent-strong: #3d6f0e;
   --accent-text-on: #ffffff;
-  --particle-color: rgba(232, 80, 10, 0.4);
-  --glass-rgb: 22, 19, 14;
+  --accent-2: #1793a3;
+  --accent-2-rgb: 23, 147, 163;
+  --particle-color: rgba(78, 138, 18, 0.35);
+  --glass-rgb: 20, 17, 14;
 
   /* streaming-text component tokens */
-  --ink-3: rgba(22, 19, 14, 0.4);
-  --inset: #f6f1e7;
-  --hover: rgba(22, 19, 14, 0.04);
-  --hover-2: rgba(22, 19, 14, 0.08);
-  --line-strong: rgba(22, 19, 14, 0.2);
+  --ink-3: #9a9188;
+  --inset: #f2ede5;
+  --hover: rgba(20, 17, 14, 0.04);
+  --hover-2: rgba(20, 17, 14, 0.08);
+  --line-strong: rgba(20, 17, 14, 0.2);
 }
 
 :root {
@@ -169,10 +152,11 @@ body {
 .hero-title {
   font-family: 'Archivo', sans-serif;
   font-weight: 900;
-  font-size: clamp(52px, 10vw, 128px);
+  font-size: clamp(44px, 7.2vw, 116px);
   line-height: 0.92;
-  letter-spacing: -0.02em;
-  text-align: center;
+  letter-spacing: -0.03em;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 /* =========================================================
@@ -206,18 +190,6 @@ body {
   -webkit-backdrop-filter: blur(20px) saturate(160%);
   border: 1px solid rgba(var(--accent-rgb), 0.25);
   box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18), 0 0 60px rgba(var(--accent-rgb), 0.08), inset 0 1px 0 rgba(var(--glass-rgb), 0.1);
-}
-
-/* Subtle solar-panel grid texture behind the hero particles —
-   5-8% opacity, tinted with the theme's ink color so it never
-   fights the accent or the text. */
-.solar-grid {
-  background-image:
-    linear-gradient(rgba(var(--text-primary-rgb), 0.07) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(var(--text-primary-rgb), 0.07) 1px, transparent 1px);
-  background-size: 42px 42px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, black 40%, transparent 85%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 35%, black 40%, transparent 85%);
 }
 
 :focus-visible {
@@ -315,20 +287,31 @@ body {
 
 /* =========================================================
    WhatsApp floating button — persistent on the right edge
-   through the whole scroll, brand green regardless of theme
-   (same intentional exception as .btn-whatsapp).
+   through the whole scroll. Dark circle + brand-accent icon,
+   matching the site's own palette rather than WhatsApp green,
+   with a slow idle float so it reads as "always there" without
+   being distracting.
    ========================================================= */
+@keyframes whatsappFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
 .whatsapp-fab {
-  background: #25d366;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
-  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.25s ease;
+  background: #14110e;
+  color: #b8f04a;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  animation: whatsappFloat 4s ease-in-out infinite;
+  transition: transform 0.2s ease, box-shadow 0.25s ease;
 }
 .whatsapp-fab:hover,
 .whatsapp-fab:focus-visible {
-  background: #20bd5a;
-  box-shadow: 0 10px 32px rgba(37, 211, 102, 0.55);
+  animation-play-state: paused;
   transform: scale(1.08);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.34);
 }
 .whatsapp-fab:active {
   transform: scale(0.95);
+}
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-fab { animation: none; }
 }

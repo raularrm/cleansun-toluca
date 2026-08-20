@@ -36,6 +36,23 @@ async function main() {
     // sections below the fold aren't stuck at opacity:0 in a static PDF.
     await page.emulateMediaFeatures([{ name: 'prefers-reduced-motion', value: 'reduce' }]);
     await page.goto(BASE_URL + p.path, { waitUntil: 'networkidle0', timeout: 30000 });
+
+    // Scroll all the way down in steps so every loading="lazy" image
+    // actually gets triggered before we capture — a tall single-page site
+    // like this one has images far below the initial viewport that
+    // page.goto's networkidle0 never sees.
+    await page.evaluate(async () => {
+      const step = 600;
+      let y = 0;
+      const max = document.body.scrollHeight;
+      while (y < max) {
+        window.scrollTo(0, y);
+        await new Promise((r) => setTimeout(r, 120));
+        y += step;
+      }
+      window.scrollTo(0, 0);
+    });
+    await page.waitForNetworkIdle({ idleTime: 300, timeout: 10000 }).catch(() => {});
     // Let images/fonts settle.
     await new Promise((r) => setTimeout(r, 800));
 
