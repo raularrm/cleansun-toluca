@@ -24,3 +24,6 @@ pdf-export
 *.njsproj
 *.sln
 *.sw?
+
+# Instrucciones de trabajo, no forman parte del sitio
+CLAUDE.md
