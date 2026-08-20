@@ -3,7 +3,7 @@ import { Clock, MapPin, Phone, Star, Sun, Wrench } from 'lucide-react';
 import { MAPS_LINK, PHONE_DISPLAY, PHONE_TEL, SECTION_IDS } from '../lib/constants';
 import { scrollToId } from '../lib/lenis';
 import panelPhoto from '../assets/img/cleansun-fotovoltaico-real-2-wide.jpg';
-import cardPhoto from '../assets/img/cleansun-cargador-mercedes-real.jpg';
+import cardPhoto from '../assets/img/cleansun-fotovoltaico-real-2.jpg';
 
 const CONFIANZA = [
   {
@@ -124,7 +124,7 @@ export function Hero() {
               <div className="aspect-[3/2]">
                 <img
                   src={cardPhoto}
-                  alt="Cargador para auto eléctrico Mercedes-Benz instalado por CleanSun en una casa de Toluca"
+                  alt="Sistema fotovoltaico instalado por CleanSun sobre un techo industrial en Toluca"
                   className="w-full h-full object-cover"
                 />
               </div>

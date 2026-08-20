@@ -8,7 +8,7 @@ export function Footer() {
     <footer className="accent-on-dark relative bg-[#14110e] text-[#faf7f3]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 pb-10">
         <div className="flex flex-wrap items-end justify-between gap-10">
-          <h2 className="font-heading font-black text-4xl sm:text-6xl leading-[0.95] tracking-tight m-0">
+          <h2 className="font-heading font-black text-3xl sm:text-[42px] leading-[1] tracking-tight m-0">
             ¿Listo para bajar tu recibo de <span className="text-accent">CFE</span>?
           </h2>
           <div>

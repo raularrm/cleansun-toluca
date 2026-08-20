@@ -15,7 +15,7 @@ export function StatBar() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-10 sm:py-12 grid grid-cols-2 lg:grid-cols-4 gap-8">
         {STATS.map((s) => (
           <div key={s.label}>
-            <div className="font-heading font-black text-4xl sm:text-5xl tracking-tight text-ink">
+            <div className="font-heading font-black text-2xl sm:text-3xl tracking-tight text-ink">
               {s.value}
             </div>
             <p className="text-sm text-muted mt-2">{s.label}</p>

@@ -233,7 +233,7 @@ export function Calculadora() {
                   Hoy pagas <strong className="text-[#faf7f3]">{money(result.entered)}</strong> por bimestre.
                   Con un sistema bien dimensionado, pagarías:
                 </p>
-                <p className="font-heading font-black text-4xl sm:text-5xl leading-tight tracking-tight text-accent2 m-0">
+                <p className="font-heading font-black text-3xl sm:text-4xl leading-tight tracking-tight text-accent2 m-0">
                   {money(result.payLow)} – {money(result.payHigh)}
                 </p>
                 <p className="text-[15.5px] text-[#faf7f3]/70 m-0">

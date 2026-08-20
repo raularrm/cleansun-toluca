@@ -5,6 +5,7 @@ import { useSectionReveal } from '../lib/useSectionReveal';
 import { MAPS_LINK, SECTION_IDS } from '../lib/constants';
 import { SectionIntro } from './SectionIntro';
 import { Lightbox } from './Lightbox';
+import { PhotoCarousel } from './PhotoCarousel';
 import fotovoltaicoSrc from '../assets/img/cleansun-fotovoltaico-real.jpg';
 import cargadorSrc from '../assets/img/cleansun-cargador-mercedes-real.jpg';
 import fotovoltaico2ThumbSrc from '../assets/img/cleansun-fotovoltaico-real-2-thumb.jpg';
@@ -145,32 +146,15 @@ export function Resenas() {
 
         {/* Trabajos realizados — real photos sourced from Google Maps */}
         <div className="mt-20">
-          <h3 className="font-heading font-black text-[clamp(26px,3vw,40px)] tracking-tight text-ink">
+          <h3 className="font-heading font-black text-[clamp(21px,2.2vw,28px)] tracking-tight text-ink">
             Trabajos realizados
           </h3>
           <p className="text-[15.5px] text-muted mt-2.5">
             Fotos reales, tomadas de la ficha pública de Google de CleanSun.
           </p>
 
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-5 mt-7">
-            {GALLERY.map((g, i) => (
-              <figure key={g.thumb} data-reveal className="m-0 overflow-hidden rounded-[22px] bg-surface border border-line">
-                <button
-                  type="button"
-                  onClick={() => setLightboxIndex(i)}
-                  className="relative block w-full aspect-[4/3] group"
-                  aria-label={`Ampliar foto: ${g.caption}`}
-                >
-                  <img
-                    src={g.thumb}
-                    alt={g.alt}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </button>
-                <figcaption className="px-[18px] py-4 text-[14.5px] text-ink">{g.caption}</figcaption>
-              </figure>
-            ))}
+          <div data-reveal className="mt-7 max-w-2xl">
+            <PhotoCarousel photos={GALLERY} onOpen={setLightboxIndex} />
           </div>
 
           <p className="text-xs mt-4 text-[rgba(var(--text-primary-rgb),0.4)]">
