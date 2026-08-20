@@ -90,7 +90,7 @@ export function Resenas() {
 
   return (
     <section id={SECTION_IDS['Reseñas']} ref={sectionRef} className="section-anchor relative bg-surface2">
-      <div ref={ref} className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-24">
+      <div ref={ref} className="mx-auto max-w-6xl px-4 pt-16 sm:px-6 sm:pt-24">
         <div className="flex flex-wrap items-end justify-between gap-6 mb-10 sm:mb-14">
           <SectionIntro
             eyebrow="Reseñas"
@@ -152,18 +152,23 @@ export function Resenas() {
           <p className="text-[15.5px] text-muted mt-2.5">
             Fotos reales, tomadas de la ficha pública de Google de CleanSun.
           </p>
-
-          <div data-reveal className="mt-7 max-w-2xl">
-            <PhotoCarousel photos={GALLERY} onOpen={setLightboxIndex} />
-          </div>
-
-          <p className="text-xs mt-4 text-[rgba(var(--text-primary-rgb),0.4)]">
-            Son las {GALLERY.length} fotografías de trabajos reales que pudimos extraer de la ficha de
-            Google al construir este sitio (de un total de 15 en su perfil) — sin repetir tomas
-            duplicadas o casi idénticas. No las completamos con imágenes generadas por IA porque esta
-            sección debe mostrar trabajo real.
-          </p>
         </div>
+      </div>
+
+      {/* Full-bleed: sale del contenedor max-w-6xl a propósito, para que
+          el desfile automático se sienta como una franja de cine sobre
+          todo el ancho de la página, no una caja pequeña. */}
+      <div className="mt-7" data-reveal>
+        <PhotoCarousel photos={GALLERY} onOpen={setLightboxIndex} />
+      </div>
+
+      <div className="mx-auto max-w-6xl px-4 pb-16 sm:px-6 sm:pb-24">
+        <p className="mt-5 max-w-2xl text-xs text-[rgba(var(--text-primary-rgb),0.4)]">
+          Son las {GALLERY.length} fotografías de trabajos reales que pudimos extraer de la ficha de
+          Google al construir este sitio (de un total de 15 en su perfil) — sin repetir tomas
+          duplicadas o casi idénticas. No las completamos con imágenes generadas por IA porque esta
+          sección debe mostrar trabajo real.
+        </p>
       </div>
 
       {lightboxIndex !== null && (

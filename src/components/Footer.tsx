@@ -5,7 +5,7 @@ import { PRIVACY_ROUTE, PHONE_DISPLAY, WHATSAPP_LINK_QUOTE } from '../lib/consta
 
 export function Footer() {
   return (
-    <footer className="accent-on-dark relative bg-[#14110e] text-[#faf7f3]">
+    <footer className="accent-on-dark relative border-t border-[#faf7f3]/10 bg-[#14110e] text-[#faf7f3]">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-20 sm:pt-24 pb-10">
         <div className="flex flex-wrap items-end justify-between gap-10">
           <h2 className="font-heading font-black text-3xl sm:text-[42px] leading-[1] tracking-tight m-0">

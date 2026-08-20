@@ -9,7 +9,7 @@ export interface CarouselPhoto {
   source: string;
 }
 
-const AUTO_ADVANCE_MS = 4500;
+const AUTO_ADVANCE_MS = 5000;
 
 export function PhotoCarousel({
   photos,
@@ -42,7 +42,7 @@ export function PhotoCarousel({
 
   return (
     <div
-      className="relative rounded-[26px] overflow-hidden bg-surface border border-line"
+      className="relative w-full h-[300px] sm:h-[440px] lg:h-[580px] overflow-hidden bg-surface"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
       onFocus={() => setPaused(true)}
@@ -51,7 +51,7 @@ export function PhotoCarousel({
       <button
         type="button"
         onClick={() => onOpen(index)}
-        className="relative block w-full aspect-[16/9] group"
+        className="absolute inset-0 block h-full w-full"
         aria-label={`Ampliar foto: ${current.caption}`}
       >
         {photos.map((p, i) => (
@@ -60,33 +60,27 @@ export function PhotoCarousel({
             src={p.thumb}
             alt={p.alt}
             loading={i === 0 ? 'eager' : 'lazy'}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-700 ${
+            className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-1000 ease-in-out ${
               i === index ? 'opacity-100' : 'opacity-0'
             }`}
           />
         ))}
+        <div
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(20,17,14,0.1) 0%, rgba(20,17,14,0.02) 30%, rgba(20,17,14,0.15) 62%, rgba(20,17,14,0.88) 100%)',
+          }}
+        />
       </button>
 
-      {photos.length > 1 && (
-        <>
-          <button
-            type="button"
-            onClick={() => go(index - 1)}
-            aria-label="Foto anterior"
-            className="absolute left-3 top-1/2 -translate-y-1/2 z-10 liquid-glass rounded-full p-2.5 text-white min-h-[40px] min-w-[40px] flex items-center justify-center"
-          >
-            <ChevronLeft size={18} />
-          </button>
-          <button
-            type="button"
-            onClick={() => go(index + 1)}
-            aria-label="Siguiente foto"
-            className="absolute right-3 top-1/2 -translate-y-1/2 z-10 liquid-glass rounded-full p-2.5 text-white min-h-[40px] min-w-[40px] flex items-center justify-center"
-          >
-            <ChevronRight size={18} />
-          </button>
-
-          <div className="absolute bottom-3 inset-x-0 z-10 flex items-center justify-center gap-2">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 flex items-end justify-between gap-4 px-4 pb-5 sm:px-6 sm:pb-7 lg:px-10 lg:pb-9">
+        <div>
+          <p className="text-[15px] font-medium text-[#faf7f3] sm:text-base">{current.caption}</p>
+          <p className="mt-1 text-xs text-[#faf7f3]/55 sm:text-sm">{current.source}</p>
+        </div>
+        {photos.length > 1 && (
+          <div className="pointer-events-auto flex items-center gap-2 pb-1">
             {photos.map((p, i) => (
               <button
                 key={p.thumb}
@@ -95,18 +89,34 @@ export function PhotoCarousel({
                 aria-label={`Ir a la foto ${i + 1}`}
                 aria-current={i === index}
                 className={`h-2 rounded-full transition-all ${
-                  i === index ? 'w-6 bg-white' : 'w-2 bg-white/50 hover:bg-white/75'
+                  i === index ? 'w-7 bg-[#faf7f3]' : 'w-2 bg-[#faf7f3]/45 hover:bg-[#faf7f3]/70'
                 }`}
               />
             ))}
           </div>
+        )}
+      </div>
+
+      {photos.length > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={() => go(index - 1)}
+            aria-label="Foto anterior"
+            className="liquid-glass absolute left-3 top-1/2 z-10 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center rounded-full p-3 text-white sm:left-6"
+          >
+            <ChevronLeft size={20} />
+          </button>
+          <button
+            type="button"
+            onClick={() => go(index + 1)}
+            aria-label="Siguiente foto"
+            className="liquid-glass absolute right-3 top-1/2 z-10 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center rounded-full p-3 text-white sm:right-6"
+          >
+            <ChevronRight size={20} />
+          </button>
         </>
       )}
-
-      <div className="px-5 py-4 flex items-center justify-between gap-4 border-t border-line">
-        <p className="text-[14.5px] text-ink">{current.caption}</p>
-        <p className="text-xs text-[rgba(var(--text-primary-rgb),0.4)] shrink-0">{current.source}</p>
-      </div>
     </div>
   );
 }
