@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import { Hero } from '../components/Hero';
-import { StatBar } from '../components/StatBar';
 import { Servicios } from '../components/Servicios';
 import { Calculadora } from '../components/Calculadora';
 import { Resenas } from '../components/Resenas';
@@ -23,7 +22,6 @@ export function Home() {
   return (
     <>
       <Hero />
-      <StatBar />
       <Servicios />
       <Calculadora />
       <Resenas />
