@@ -46,6 +46,21 @@
   --radius-control: 8px;
 }
 
+/* The site's real --accent (green) is tuned for the cream sections.
+   Hero, Calculadora, Footer and the WhatsApp fab are forced-dark
+   regardless of section, and on that near-black bg green reads muddy —
+   the reference uses the vibrant lime there instead. Rather than
+   duplicate every text-accent/bg-accent/.btn-glow/.card-glass/.text-glow
+   usage with a second color name, this scopes an override of the same
+   variables so everything already using them just inherits the right
+   value inside these subtrees. */
+.accent-on-dark {
+  --accent: #b8f04a;
+  --accent-rgb: 184, 240, 74;
+  --accent-strong: #cdf87a;
+  --accent-text-on: #14110e;
+}
+
 /* Anchor-scroll offset so section headings clear the fixed nav pill when
    jumped to directly (single-page nav, scrollspy). */
 .section-anchor {
@@ -144,6 +159,34 @@ body {
 }
 .liquid-glass-strong:active {
   transform: scale(0.97);
+}
+
+/* =========================================================
+   Dark glass — for cards/pills sitting on top of a real photo
+   (the hero panel), where a translucent-white veil would wash
+   out against a light sky and leave text unreadable. These
+   carry their own near-black background instead of relying on
+   backdrop blur alone.
+   ========================================================= */
+.glass-pill-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(20, 17, 14, 0.55);
+  border: 1px solid rgba(250, 247, 243, 0.16);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  color: #faf7f3;
+}
+
+.glass-dark-card {
+  background: rgba(16, 14, 12, 0.92);
+  border: 1px solid rgba(250, 247, 243, 0.16);
+  backdrop-filter: blur(18px) saturate(130%);
+  -webkit-backdrop-filter: blur(18px) saturate(130%);
+  box-shadow: inset 0 1px 0 rgba(250, 247, 243, 0.12), 0 26px 60px -28px rgba(0, 0, 0, 0.95);
 }
 
 /* =========================================================
@@ -286,32 +329,10 @@ body {
 }
 
 /* =========================================================
-   WhatsApp floating button — persistent on the right edge
-   through the whole scroll. Dark circle + brand-accent icon,
-   matching the site's own palette rather than WhatsApp green,
-   with a slow idle float so it reads as "always there" without
-   being distracting.
+   WhatsApp floating button — persistent bottom-right through
+   the whole scroll. Styling (accent pill → real WhatsApp green
+   on hover/focus/active) lives inline on the component via
+   Tailwind utilities, per the house rule that brand-color
+   hover states are non-negotiable; this class only exists as a
+   hook in case future JS needs to target it.
    ========================================================= */
-@keyframes whatsappFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-.whatsapp-fab {
-  background: #14110e;
-  color: #b8f04a;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
-  animation: whatsappFloat 4s ease-in-out infinite;
-  transition: transform 0.2s ease, box-shadow 0.25s ease;
-}
-.whatsapp-fab:hover,
-.whatsapp-fab:focus-visible {
-  animation-play-state: paused;
-  transform: scale(1.08);
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.34);
-}
-.whatsapp-fab:active {
-  transform: scale(0.95);
-}
-@media (prefers-reduced-motion: reduce) {
-  .whatsapp-fab { animation: none; }
-}

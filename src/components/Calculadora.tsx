@@ -92,7 +92,7 @@ export function Calculadora() {
   const midPct = Math.round(((SECTOR_LOW + SECTOR_HIGH) / 2) * 100);
 
   return (
-    <section id={SECTION_IDS.Calculadora} ref={sectionRef} className="section-anchor relative bg-[#14110e] text-[#faf7f3]">
+    <section id={SECTION_IDS.Calculadora} ref={sectionRef} className="accent-on-dark section-anchor relative bg-[#14110e] text-[#faf7f3]">
       <div ref={ref} className="mx-auto max-w-5xl px-4 sm:px-6 py-16 sm:py-24">
         <SectionIntro
           eyebrow="Calculadora"
