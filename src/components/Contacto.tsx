@@ -1,4 +1,4 @@
-import { Clock, ExternalLink, MapPin, MessageCircle } from 'lucide-react';
+import { Clock, ExternalLink, MapPin, MapPinned, MessageCircle } from 'lucide-react';
 import { useReveal } from '../lib/useReveal';
 import { useSectionReveal } from '../lib/useSectionReveal';
 import { SectionIntro } from './SectionIntro';
@@ -17,12 +17,16 @@ const HOURS = [
   { day: 'Domingo', value: 'Cerrado', closed: true },
 ];
 
+// Placeholder — no queremos afirmar cobertura en municipios que CleanSun
+// no haya confirmado que atiende.
+const MUNICIPIOS_PLACEHOLDER = ['[Municipio 1]', '[Municipio 2]', '[Municipio 3]', '[Municipio 4]'];
+
 export function Contacto() {
   const ref = useReveal<HTMLDivElement>();
   const sectionRef = useSectionReveal<HTMLElement>();
 
   return (
-    <section id={SECTION_IDS.Cobertura} ref={sectionRef} className="section-anchor relative bg-bg">
+    <section id={SECTION_IDS.Cobertura} ref={sectionRef} className="section-anchor relative bg-surface2">
       <div ref={ref} className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-20">
         <SectionIntro
           eyebrow="Cobertura"
@@ -114,6 +118,33 @@ export function Contacto() {
               referrerPolicy="no-referrer-when-downgrade"
               className="w-full h-full min-h-[320px] border-0 invert-[0.9] hue-rotate-180 contrast-[0.9] brightness-[0.95]"
             />
+          </div>
+        </div>
+
+        <div
+          data-reveal
+          className="mt-6 rounded-3xl border border-line bg-surface p-6 sm:p-8 flex flex-col gap-4"
+        >
+          <div className="flex items-start gap-4">
+            <div className="w-11 h-11 rounded-full bg-[rgba(var(--accent-rgb),0.1)] text-accent flex items-center justify-center shrink-0">
+              <MapPinned size={19} />
+            </div>
+            <div>
+              <p className="font-heading text-sm text-ink">Zona de cobertura</p>
+              <p className="text-muted text-sm mt-1">
+                [PENDIENTE: confirmar con CleanSun qué municipios además de Toluca cubre para instalación]
+              </p>
+            </div>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {MUNICIPIOS_PLACEHOLDER.map((m) => (
+              <span
+                key={m}
+                className="rounded-full border border-dashed border-line px-4 py-1.5 text-xs text-[rgba(var(--text-primary-rgb),0.4)]"
+              >
+                {m}
+              </span>
+            ))}
           </div>
         </div>
       </div>

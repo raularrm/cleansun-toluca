@@ -1,0 +1,76 @@
+import { User } from 'lucide-react';
+import { useReveal } from '../lib/useReveal';
+import { useSectionReveal } from '../lib/useSectionReveal';
+import { SectionIntro } from './SectionIntro';
+
+const EQUIPO = [
+  {
+    nombre: 'Ingeniero Medina',
+    bio: '[PENDIENTE: bio corta de Ingeniero Medina — formación, especialidad, años en el sector solar]',
+  },
+  {
+    nombre: 'Maurilio',
+    bio: '[PENDIENTE: bio corta de Maurilio — rol específico en cada instalación]',
+  },
+];
+
+const DATOS = [
+  { label: 'Años de experiencia', value: '[PENDIENTE]' },
+  { label: 'Instalaciones realizadas', value: '[PENDIENTE]' },
+];
+
+export function QuienesSomos() {
+  const ref = useReveal<HTMLDivElement>();
+  const sectionRef = useSectionReveal<HTMLElement>();
+
+  return (
+    <section id="quienes-somos" ref={sectionRef} className="section-anchor relative bg-bg">
+      <div ref={ref} className="mx-auto max-w-6xl px-4 sm:px-6 py-16 sm:py-20">
+        <SectionIntro
+          eyebrow="Quiénes somos"
+          title="El mismo equipo, en cada instalación"
+          description="Sin subcontratistas: el Ingeniero Medina y Maurilio son quienes diseñan tu sistema y quienes suben al techo a instalarlo."
+        />
+
+        <div className="grid gap-7 sm:grid-cols-2">
+          {EQUIPO.map((persona) => (
+            <article
+              key={persona.nombre}
+              data-reveal
+              className="rounded-[28px] border border-line bg-surface p-7 sm:p-8"
+            >
+              <div className="flex items-center gap-4">
+                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-line bg-surface2 text-muted">
+                  <User size={26} />
+                </div>
+                <div>
+                  <h3 className="font-heading font-extrabold text-xl tracking-tight text-ink">
+                    {persona.nombre}
+                  </h3>
+                  <p className="text-xs text-[rgba(var(--text-primary-rgb),0.4)] mt-0.5">
+                    [PENDIENTE: foto real]
+                  </p>
+                </div>
+              </div>
+              <p className="text-[15px] text-muted mt-5 leading-relaxed">{persona.bio}</p>
+            </article>
+          ))}
+        </div>
+
+        <div
+          data-reveal
+          className="mt-7 grid grid-cols-2 gap-6 rounded-[28px] border border-line bg-surface px-6 py-7 sm:px-9 sm:py-8"
+        >
+          {DATOS.map((d) => (
+            <div key={d.label}>
+              <div className="font-heading font-black text-2xl tracking-tight text-accent sm:text-3xl">
+                {d.value}
+              </div>
+              <p className="mt-1.5 text-sm text-muted">{d.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

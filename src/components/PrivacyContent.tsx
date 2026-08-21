@@ -43,11 +43,10 @@ export function PrivacyContent() {
         <p className="font-heading text-ink text-base mb-1.5">Cookies y almacenamiento local</p>
         <p>
           Usamos una cookie estrictamente necesaria para recordar que ya aceptaste este aviso, y así no
-          mostrártelo en cada visita. También guardamos tu preferencia de tema (claro/oscuro) en el
-          almacenamiento local de tu navegador. El mapa incrustado de la sección de contacto carga
-          contenido de Google Maps, que puede establecer sus propias cookies conforme a la política de
-          privacidad de Google. Este sitio no usa cookies de publicidad ni de rastreo propio, y no
-          vendemos datos a terceros.
+          mostrártelo en cada visita. El mapa incrustado de la sección de contacto carga contenido de
+          Google Maps, que puede establecer sus propias cookies conforme a la política de privacidad de
+          Google. Este sitio no usa cookies de publicidad ni de rastreo propio, y no vendemos datos a
+          terceros.
         </p>
       </div>
 

@@ -12,6 +12,7 @@ export const SECTION_IDS: Record<(typeof NAV_LINKS)[number], string> = {
 // live on it as anchors (SECTION_IDS above). Privacy stays a separate
 // route, linked only from the footer.
 export const PRIVACY_ROUTE = '/privacidad';
+export const TERMS_ROUTE = '/terminos';
 
 // sessionStorage key used to hand off a target section id when the nav is
 // clicked from a route other than "/" (e.g. from /privacidad): Nav stores
@@ -34,3 +35,8 @@ export const MAPS_LINK = 'https://www.google.com/maps/place/?q=place_id:ChIJiz0k
 
 export const ADDRESS_LINE = 'Blvd. José María Pino Suárez Sur 2114-B';
 export const ADDRESS_CITY = 'Toluca de Lerdo, Estado de México';
+
+// Placeholders explicitly requested by the client for facts CleanSun still
+// needs to confirm — shown as visible "[PENDIENTE]" slots rather than
+// invented data or silently omitted, per their instruction this round.
+export const CONTACT_EMAIL_PLACEHOLDER = '[PENDIENTE: correo de contacto]';
