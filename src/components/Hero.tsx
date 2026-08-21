@@ -60,7 +60,7 @@ export function Hero() {
           <Star size={15} className="text-accent fill-accent shrink-0" />
           <span>5.0 en Google · 10 reseñas</span>
           <span aria-hidden="true" className="h-3.5 w-px bg-[#faf7f3]/20" />
-          <span className="text-[#faf7f3]/70">Mismo Ingeniero Medina y Maurilio</span>
+          <span className="text-[#faf7f3]/70">Mismo Ingeniero Maurilio Medina</span>
         </div>
 
         <h1 className="hero-title mx-auto max-w-[16ch] text-balance">
@@ -70,7 +70,7 @@ export function Hero() {
 
         <p className="mx-auto mt-7 max-w-[46ch] text-lg leading-relaxed text-[#faf7f3]/75">
           Instalación fotovoltaica y cargadores para autos eléctricos en Toluca. 5.0★ en Google,
-          con el mismo Ingeniero Medina y Maurilio atendiendo cada instalación.
+          con el mismo Ingeniero Maurilio Medina atendiendo cada instalación.
         </p>
 
         <div className="mt-9 flex flex-wrap items-center justify-center gap-3.5">

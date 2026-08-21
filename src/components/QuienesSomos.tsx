@@ -3,17 +3,6 @@ import { useReveal } from '../lib/useReveal';
 import { useSectionReveal } from '../lib/useSectionReveal';
 import { SectionIntro } from './SectionIntro';
 
-const EQUIPO = [
-  {
-    nombre: 'Ingeniero Medina',
-    bio: '[PENDIENTE: bio corta de Ingeniero Medina — formación, especialidad, años en el sector solar]',
-  },
-  {
-    nombre: 'Maurilio',
-    bio: '[PENDIENTE: bio corta de Maurilio — rol específico en cada instalación]',
-  },
-];
-
 const DATOS = [
   { label: 'Años de experiencia', value: '[PENDIENTE]' },
   { label: 'Instalaciones realizadas', value: '[PENDIENTE]' },
@@ -29,33 +18,28 @@ export function QuienesSomos() {
         <SectionIntro
           eyebrow="Quiénes somos"
           title="El mismo equipo, en cada instalación"
-          description="Sin subcontratistas: el Ingeniero Medina y Maurilio son quienes diseñan tu sistema y quienes suben al techo a instalarlo."
+          description="Sin subcontratistas: el Ingeniero Maurilio Medina es quien diseña tu sistema y quien sube al techo a instalarlo."
         />
 
-        <div className="grid gap-7 sm:grid-cols-2">
-          {EQUIPO.map((persona) => (
-            <article
-              key={persona.nombre}
-              data-reveal
-              className="rounded-[28px] border border-line bg-surface p-7 sm:p-8"
-            >
-              <div className="flex items-center gap-4">
-                <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-line bg-surface2 text-muted">
-                  <User size={26} />
-                </div>
-                <div>
-                  <h3 className="font-heading font-extrabold text-xl tracking-tight text-ink">
-                    {persona.nombre}
-                  </h3>
-                  <p className="text-xs text-[rgba(var(--text-primary-rgb),0.4)] mt-0.5">
-                    [PENDIENTE: foto real]
-                  </p>
-                </div>
-              </div>
-              <p className="text-[15px] text-muted mt-5 leading-relaxed">{persona.bio}</p>
-            </article>
-          ))}
-        </div>
+        <article data-reveal className="rounded-[28px] border border-line bg-surface p-7 sm:p-8 max-w-xl">
+          <div className="flex items-center gap-4">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border border-line bg-surface2 text-muted">
+              <User size={26} />
+            </div>
+            <div>
+              <h3 className="font-heading font-extrabold text-xl tracking-tight text-ink">
+                Ingeniero Maurilio Medina
+              </h3>
+              <p className="text-xs text-[rgba(var(--text-primary-rgb),0.4)] mt-0.5">
+                [PENDIENTE: foto real]
+              </p>
+            </div>
+          </div>
+          <p className="text-[15px] text-muted mt-5 leading-relaxed">
+            [PENDIENTE: bio corta de Ingeniero Maurilio Medina — formación, especialidad, años en el
+            sector solar]
+          </p>
+        </article>
 
         <div
           data-reveal
