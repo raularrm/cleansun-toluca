@@ -2,6 +2,7 @@ import { ClipboardList, FileText, Sun, Wrench } from 'lucide-react';
 import { useReveal } from '../lib/useReveal';
 import { useSectionReveal } from '../lib/useSectionReveal';
 import { SectionIntro } from './SectionIntro';
+import { TiltCard } from './TiltCard';
 
 const PASOS = [
   {
@@ -45,24 +46,22 @@ export function ComoFunciona() {
 
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {PASOS.map(({ Icon, title, desc, tiempo }, i) => (
-            <div
-              key={title}
-              data-reveal
-              className="rounded-[26px] border border-line bg-surface p-6 sm:p-7 flex flex-col"
-            >
-              <div className="flex items-center justify-between">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[rgba(var(--accent-rgb),0.1)] text-accent">
-                  <Icon size={18} />
-                </span>
-                <span className="font-heading font-black text-2xl text-[rgba(var(--text-primary-rgb),0.15)]">
-                  {i + 1}
-                </span>
-              </div>
-              <h3 className="font-heading font-extrabold text-lg tracking-tight text-ink mt-5">{title}</h3>
-              <p className="text-sm text-muted mt-2 flex-1">{desc}</p>
-              <p className="text-xs text-[rgba(var(--text-primary-rgb),0.4)] mt-4 pt-4 border-t border-line">
-                {tiempo}
-              </p>
+            <div key={title} data-reveal>
+              <TiltCard className="rounded-[26px] border border-line bg-surface p-6 sm:p-7 flex flex-col h-full">
+                <div className="flex items-center justify-between">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[rgba(var(--accent-rgb),0.1)] text-accent">
+                    <Icon size={18} />
+                  </span>
+                  <span className="font-heading font-black text-2xl text-[rgba(var(--text-primary-rgb),0.15)]">
+                    {i + 1}
+                  </span>
+                </div>
+                <h3 className="font-heading font-extrabold text-lg tracking-tight text-ink mt-5">{title}</h3>
+                <p className="text-sm text-muted mt-2 flex-1">{desc}</p>
+                <p className="text-xs text-[rgba(var(--text-primary-rgb),0.4)] mt-4 pt-4 border-t border-line">
+                  {tiempo}
+                </p>
+              </TiltCard>
             </div>
           ))}
         </div>

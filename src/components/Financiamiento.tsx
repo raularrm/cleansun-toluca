@@ -2,6 +2,7 @@ import { Banknote, CreditCard } from 'lucide-react';
 import { useReveal } from '../lib/useReveal';
 import { useSectionReveal } from '../lib/useSectionReveal';
 import { SectionIntro } from './SectionIntro';
+import { TiltCard } from './TiltCard';
 
 const OPCIONES = [
   {
@@ -27,12 +28,14 @@ export function Financiamiento() {
 
         <div className="grid gap-5 sm:grid-cols-2">
           {OPCIONES.map(({ Icon, title, desc }) => (
-            <div key={title} data-reveal className="rounded-[26px] border border-line bg-surface p-6 sm:p-7">
-              <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[rgba(var(--accent-rgb),0.1)] text-accent">
-                <Icon size={19} />
-              </span>
-              <h3 className="font-heading font-extrabold text-base tracking-tight text-ink mt-5">{title}</h3>
-              <p className="text-sm text-muted mt-2">{desc}</p>
+            <div key={title} data-reveal>
+              <TiltCard className="rounded-[26px] border border-line bg-surface p-6 sm:p-7 h-full">
+                <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[rgba(var(--accent-rgb),0.1)] text-accent">
+                  <Icon size={19} />
+                </span>
+                <h3 className="font-heading font-extrabold text-base tracking-tight text-ink mt-5">{title}</h3>
+                <p className="text-sm text-muted mt-2">{desc}</p>
+              </TiltCard>
             </div>
           ))}
         </div>

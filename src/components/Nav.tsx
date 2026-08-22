@@ -1,15 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { LogoMark } from './LogoMark';
 import { NAV_LINKS, SECTION_IDS, PENDING_SECTION_KEY, WHATSAPP_LINK_QUOTE } from '../lib/constants';
 import { scrollToId } from '../lib/lenis';
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function Nav() {
   const [open, setOpen] = useState(false);
   const [activeId, setActiveId] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
+  const navRef = useRef<HTMLElement | null>(null);
+
+  // Small "condensed" state once scrolled past the very top — a plain
+  // scroll listener would drift out of sync with Lenis's rAF-driven
+  // smoothing, so this rides the same ScrollTrigger instance everything
+  // else on the page already syncs with.
+  useEffect(() => {
+    const st = ScrollTrigger.create({
+      trigger: document.body,
+      start: 'top -40',
+      end: 99999,
+      toggleClass: { targets: navRef.current, className: 'nav-scrolled' },
+    });
+    return () => st.kill();
+  }, []);
 
   // Close the mobile panel on every route change.
   useEffect(() => {
@@ -50,7 +69,8 @@ export function Nav() {
   return (
     <header className="fixed top-0 inset-x-0 z-50">
       <nav
-        className="backdrop-blur-xl border-b border-line bg-[rgba(var(--bg-rgb),0.86)]"
+        ref={navRef}
+        className="nav-bar backdrop-blur-xl border-b border-line bg-[rgba(var(--bg-rgb),0.86)]"
         aria-label="Navegación principal"
       >
         <div className="mx-auto max-w-6xl px-4 sm:px-6 h-[68px] sm:h-[74px] flex items-center justify-between gap-4">

@@ -188,6 +188,30 @@ body {
 }
 
 /* =========================================================
+   Tilt cards (TiltCard.tsx) — the shadow shifts with the
+   pointer-tracked rotateX/rotateY GSAP sets on the element, so
+   the card reads as lifting toward the cursor rather than just
+   rotating in place.
+   ========================================================= */
+.tilt-card {
+  box-shadow: 0 calc(var(--tilt-shadow-y, 10) * 1px) 40px -14px rgba(0, 0, 0, 0.55);
+  will-change: transform;
+}
+
+/* =========================================================
+   Nav — condenses slightly once scrolled past the very top
+   (class toggled by ScrollTrigger in Nav.tsx), a small signal
+   that the page is "listening" rather than a static bar.
+   ========================================================= */
+.nav-bar {
+  transition: box-shadow 0.35s ease, background-color 0.35s ease;
+}
+.nav-bar.nav-scrolled {
+  box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.45);
+  background-color: rgba(var(--bg-rgb), 0.94);
+}
+
+/* =========================================================
    Hero title — bold sans, never serif/italic
    ========================================================= */
 .hero-title {
@@ -206,14 +230,15 @@ body {
    ========================================================= */
 .btn-glow {
   box-shadow: 0 0 0 rgba(var(--accent-rgb), 0), 0 8px 30px rgba(var(--accent-rgb), 0.35);
-  transition: box-shadow 0.25s ease, transform 0.15s ease;
+  transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
 .btn-glow:hover,
 .btn-glow:focus-visible {
-  box-shadow: 0 0 0 rgba(var(--accent-rgb), 0), 0 10px 42px rgba(var(--accent-rgb), 0.55);
+  box-shadow: 0 0 0 rgba(var(--accent-rgb), 0), 0 14px 46px rgba(var(--accent-rgb), 0.55);
+  transform: translateY(-3px);
 }
 .btn-glow:active {
-  transform: scale(0.97);
+  transform: translateY(-1px) scale(0.97);
 }
 
 .text-glow {

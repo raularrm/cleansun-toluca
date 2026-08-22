@@ -1,8 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Phone, Star } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { PHONE_DISPLAY, PHONE_TEL, SECTION_IDS } from '../lib/constants';
 import { scrollToId } from '../lib/lenis';
 import heroPhoto from '../assets/img/cleansun-fotovoltaico-real-2-wide.jpg';
+
+gsap.registerPlugin(ScrollTrigger);
 
 const STATS = [
   { value: '5.0★', label: '10 reseñas en Google, calificación máxima' },
@@ -13,22 +17,63 @@ const STATS = [
 
 export function Hero() {
   const [mounted, setMounted] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const photoRef = useRef<HTMLImageElement | null>(null);
+  const statsRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const t = window.setTimeout(() => setMounted(true), 60);
     return () => window.clearTimeout(t);
   }, []);
 
+  // Parallax on the background photo — a real scroll-scrub (the case
+  // ScrollTrigger is meant for), not a discrete reveal.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = gsap.context(() => {
+      gsap.to(photoRef.current, {
+        yPercent: 14,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      });
+    }, sectionRef);
+    return () => ctx.revert();
+  }, []);
+
+  // Stat strip: a staggered pop-in once the hero's own entrance
+  // transition has settled — it's above the fold on load, not something
+  // scrolled into later, so this runs on mount rather than ScrollTrigger.
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const el = statsRef.current;
+    if (!el) return;
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        el.children,
+        { opacity: 0, y: 18, scale: 0.92 },
+        { opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.09, ease: 'back.out(1.6)', delay: 0.5 }
+      );
+    }, el);
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
       id={SECTION_IDS.Inicio}
+      ref={sectionRef}
       className="accent-on-dark relative flex min-h-[100svh] flex-col overflow-hidden bg-[#14110e] text-[#faf7f3]"
     >
       <img
+        ref={photoRef}
         src={heroPhoto}
         alt=""
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover"
+        className="pointer-events-none absolute inset-0 h-[116%] w-full object-cover"
       />
       {/* Velo calculado para que el texto blanco pase 7:1 de contraste
           sobre la parte más clara de la foto (el cielo): flat 0.86 +
@@ -86,7 +131,7 @@ export function Hero() {
           </button>
           <a
             href={PHONE_TEL}
-            className="glass-pill-dark group inline-flex min-h-[52px] items-center gap-3 py-2 pl-7 pr-2 font-medium text-[15px]"
+            className="glass-pill-dark group inline-flex min-h-[52px] items-center gap-3 py-2 pl-7 pr-2 font-medium text-[15px] transition-transform duration-300 hover:-translate-y-0.5"
           >
             Llamar al {PHONE_DISPLAY}
             <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#faf7f3]/12 transition-transform duration-300 group-hover:rotate-12">
@@ -100,7 +145,10 @@ export function Hero() {
           la referencia — sin avatares inventados: solo cifras que ya
           teníamos verificadas. */}
       <div className="relative z-[2] mx-4 mb-6 sm:mx-6 sm:mb-8">
-        <div className="glass-dark-card mx-auto grid max-w-5xl grid-cols-2 gap-6 rounded-[24px] px-6 py-7 sm:gap-8 sm:px-9 sm:py-8 lg:grid-cols-4">
+        <div
+          ref={statsRef}
+          className="glass-dark-card mx-auto grid max-w-5xl grid-cols-2 gap-6 rounded-[24px] px-6 py-7 sm:gap-8 sm:px-9 sm:py-8 lg:grid-cols-4"
+        >
           {STATS.map((s) => (
             <div key={s.label}>
               <div className="font-heading font-black text-2xl tracking-tight text-[#faf7f3] sm:text-3xl">
